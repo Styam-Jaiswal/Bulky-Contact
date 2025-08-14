@@ -1,0 +1,43 @@
+<template>
+    <lightning-card title="Multiple Contacts Insert" icon-name="standard:contact">
+        <div class="slds-p-around_medium">
+            
+            <template for:each={contactList} for:item="contact" for:index="index">
+                <div key={contact.key} class="slds-grid slds-gutters slds-m-bottom_small">
+                    <lightning-input name="FirstName" label="First Name"
+                                     data-index={index} value={contact.FirstName}
+                                     onchange={handleChange}></lightning-input>
+
+                    <lightning-input name="LastName" label="Last Name"
+                                     data-index={index} value={contact.LastName}
+                                     onchange={handleChange}></lightning-input>
+
+                    <lightning-input name="Email" type="email" label="Email"
+                                     data-index={index} value={contact.Email}
+                                     onchange={handleChange}></lightning-input>
+
+                    <lightning-input name="Phone" type="tel" label="Phone"
+                                     data-index={index} value={contact.Phone}
+                                     onchange={handleChange}></lightning-input>
+
+                    <lightning-button label="Remove" variant="destructive"
+                                      data-index={index} onclick={removeRow}>
+                    </lightning-button>
+                </div>
+            </template>
+
+            <lightning-button label="Add Row" onclick={addRow}></lightning-button>
+            <lightning-button variant="brand" label="Save Contacts"
+                              onclick={saveContacts} class="slds-m-left_small">
+            </lightning-button>
+        </div>
+
+        <template if:true={insertedContacts}>
+            <lightning-datatable
+                key-field="Id"
+                data={insertedContacts}
+                columns={columns}>
+            </lightning-datatable>
+        </template>
+    </lightning-card>
+</template>
