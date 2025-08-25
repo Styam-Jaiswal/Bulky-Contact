@@ -1,12 +1,13 @@
 <template>
-    <lightning-card title="Multiple Contacts Insert" icon-name="standard:contact">
+    <lightning-card title="Manage Contacts" icon-name="standard:contact">
         <div class="slds-p-around_medium">
-            
+
+            <!-- Add Rows for Insert -->
             <template for:each={contactList} for:item="contact" for:index="index">
                 <div key={contact.key} class="slds-grid slds-gutters slds-m-bottom_small">
                     <lightning-input name="FirstName" label="First Name"
                                      data-index={index} value={contact.FirstName}
-                                     onchange={handleChange}></lightning-input>
+                                     onchange={handleChange}></lightning-input> 
 
                     <lightning-input name="LastName" label="Last Name"
                                      data-index={index} value={contact.LastName}
@@ -21,23 +22,34 @@
                                      onchange={handleChange}></lightning-input>
 
                     <lightning-button label="Remove" variant="destructive"
-                                      data-index={index} onclick={removeRow}>
+                                      data-index={index} onclick={removeRow} class="slds-m-left_small">
                     </lightning-button>
                 </div>
             </template>
 
             <lightning-button label="Add Row" onclick={addRow}></lightning-button>
-            <lightning-button variant="brand" label="Save Contacts"
+            <lightning-button variant="brand" label="Save New Contacts"
                               onclick={saveContacts} class="slds-m-left_small">
             </lightning-button>
         </div>
 
+        <!-- Editable Datatable -->
         <template if:true={insertedContacts}>
             <lightning-datatable
                 key-field="Id"
                 data={insertedContacts}
-                columns={columns}>
+                columns={columns}
+                draft-values={draftValues}
+                
+                hide-checkbox-column
+                editable>
             </lightning-datatable>
+
+            <!-- Save / Cancel Buttons -->
+            <div class="slds-m-top_small slds-text-align_right">
+                <lightning-button variant="brand" label="Save" onclick={updateContacts}></lightning-button>
+                <lightning-button variant="neutral" label="Cancel" class="slds-m-left_small" onclick={cancelChanges}></lightning-button>
+            </div>
         </template>
     </lightning-card>
 </template>

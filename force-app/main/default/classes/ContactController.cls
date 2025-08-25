@@ -13,4 +13,16 @@ public with sharing class ContactController {
             WHERE Id IN :contactsList
         ];
     }
+    @AuraEnabled
+    public static List<Contact> updateMultipleContacts(List<Contact> contactsList) {
+        if (contactsList == null || contactsList.isEmpty()) {
+            return new List<Contact>();
+        }
+        update contactsList;
+        return [
+            SELECT Id, FirstName, LastName, Email, Phone
+            FROM Contact
+            WHERE Id IN :contactsList
+        ];
+    }
 }
